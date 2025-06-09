@@ -1,4 +1,4 @@
-package com.github.nolifejavadeveloper.yogurtaddons.init;
+package net.ethann.yogurtaddons.init;
 
 import org.spongepowered.asm.lib.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
