@@ -77,6 +77,10 @@ public class AutoSeller {
                     disable();
                     return;
                 }
+                if (!InventoryUtil.getCurrentContainerName().equals("Trades")) {
+                    log("container name does not match \"Trades\"");
+                    disable();
+                }
                 EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
                 InventoryPlayer inv = p.inventory;
 
