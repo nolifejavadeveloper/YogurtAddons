@@ -71,6 +71,7 @@ public class AutoSeller {
                 ChatUtil.sendCommand("trade");
                 scheduler.schedule(DelayUtil.getDelay(900, 400));
                 stage = SellingStage.SELL;
+                break;
             case SELL: {
                 if (!scheduler.isOver()) return;
                 if (order.isEmpty()) {
@@ -80,6 +81,7 @@ public class AutoSeller {
                 if (!InventoryUtil.getCurrentContainerName().equals("Trades")) {
                     ChatUtil.warn("container name does not match \"Trades\"");
                     disable();
+                    return;
                 }
                 EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
                 InventoryPlayer inv = p.inventory;
@@ -105,6 +107,7 @@ public class AutoSeller {
                 ChatUtil.log("clicked " + slot.b);
 
                 scheduler.schedule(DelayUtil.getDelay(300, 100));
+                break;
             }
         }
     }
