@@ -29,7 +29,7 @@ public class InventoryUtil {
         mc.thePlayer.inventory.currentItem = slot;
     }
 
-    public static void takeChest(int slot) {
+    public static void doubleClickItem(int slot) {
         windowClick(slot, MOUSE_CLICK_LEFT, MODE_DOUBLE_CLICK);
     }
 
