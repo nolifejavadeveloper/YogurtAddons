@@ -57,6 +57,10 @@ public class InventoryUtil {
         return "";
     }
 
+    public static void closeInventory() {
+        mc.thePlayer.closeScreen();
+    }
+
     private static void windowClick(int slot, int mouse, int mode) {
         GuiScreen currentScreen = mc.currentScreen;
         if (currentScreen instanceof GuiChest) {
