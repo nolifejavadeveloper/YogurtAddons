@@ -1,8 +1,6 @@
 package net.ethann.yogurtaddons.macro.impl.potion;
 
-import net.ethann.yogurtaddons.util.InventoryUtil;
-import net.ethann.yogurtaddons.util.Pair;
-import net.ethann.yogurtaddons.util.Scheduler;
+import net.ethann.yogurtaddons.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -15,9 +13,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.*;
 
-public class AutoSellChest {
+public class AutoSeller {
     private final Scheduler scheduler;
-    private final AutoSellChestHUD hud;
+    private final AutoSellerHUD hud;
+    private SellingStage stage = SellingStage.OPEN_TRADE_MENU;
 
     private final Queue<Pair<Integer, Integer>> order = new LinkedList<>(Arrays.asList(
             p(9, 54),
@@ -61,42 +60,49 @@ public class AutoSellChest {
         return new Pair<>(a, b);
     }
 
-    public AutoSellChest() {
+    public AutoSeller() {
         this.scheduler = new Scheduler();
-        this.hud = new AutoSellChestHUD(scheduler);
+        this.hud = new AutoSellerHUD(scheduler);
     }
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent e) {
-        if (!scheduler.isOver()) return;
-        if (order.isEmpty()) {
-            disable();
-            return;
-        }
-        EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
-        InventoryPlayer inv = p.inventory;
+        switch (stage) {
+            case OPEN_TRADE_MENU:
+                ChatUtil.sendCommand("trade");
+                scheduler.schedule(DelayUtil.getDelay(900, 400));
+            case SELL: {
+                if (!scheduler.isOver()) return;
+                if (order.isEmpty()) {
+                    disable();
+                    return;
+                }
+                EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+                InventoryPlayer inv = p.inventory;
 
-        Pair<Integer,Integer> slot;
-        while (true) {
-            if (order.isEmpty()) {
-                log("unable to find a slot, ending...");
-                disable();
-                return;
-            }
-            slot = order.poll();
-            ItemStack item = inv.getStackInSlot(slot.a);
-            if (item == null) {
-                log("skipping slot " + slot.a + " since it is empty");
-            }else if (!shouldSell(item)) {
-                log("skipping slot " + slot.a + " since it is not the target item");
-            }else {
-                break;
+                Pair<Integer,Integer> slot;
+                while (true) {
+                    if (order.isEmpty()) {
+                        log("unable to find a slot, ending...");
+                        disable();
+                        return;
+                    }
+                    slot = order.poll();
+                    ItemStack item = inv.getStackInSlot(slot.a);
+                    if (item == null) {
+                        log("skipping slot " + slot.a + " since it is empty");
+                    }else if (!shouldSell(item)) {
+                        log("skipping slot " + slot.a + " since it is not the target item");
+                    }else {
+                        break;
+                    }
+                }
+                InventoryUtil.leftShiftClickItem(slot.b);
+                log("clicked " + slot.b);
+
+                scheduler.schedule(DelayUtil.getDelay(300, 100));
             }
         }
-        InventoryUtil.leftShiftClickItem(slot.b);
-        log("clicked " + slot.b);
-
-        scheduler.schedule(generateDelay());
     }
 
     private boolean shouldSell(ItemStack itemStack) {
@@ -116,11 +122,15 @@ public class AutoSellChest {
         hud.disable();
     }
 
-    private int generateDelay() {
-        return 300 + (int) (Math.random() * 100);
-    }
-
     private void log(String s) {
         Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText("§a§lYo§e§lgurt§r§f > " + s));
+    }
+
+    private enum SellingStage {
+        START,
+        OPEN_SB_MENU,
+        OPEN_RECIPE_MENU,
+        OPEN_TRADE_MENU,
+        SELL,
     }
 }
