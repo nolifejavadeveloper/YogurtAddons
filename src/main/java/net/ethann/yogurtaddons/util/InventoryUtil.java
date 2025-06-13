@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import org.apache.commons.lang3.Validate;
 
 public class InventoryUtil {
@@ -44,6 +45,17 @@ public class InventoryUtil {
         windowClick(slot, MOUSE_CLICK_MIDDLE, MODE_MIDDLE_CLICK);
     }
 
+    public static String getCurrentContainerName() {
+        GuiScreen currentScreen = mc.currentScreen;
+        if (currentScreen instanceof GuiChest) {
+            GuiChest chest = (GuiChest) currentScreen;
+            IInventory inv = (IInventory) chest;
+            return inv.getDisplayName().getUnformattedText();
+        }
+
+        return null;
+    }
+
     private static void windowClick(int slot, int mouse, int mode) {
         GuiScreen currentScreen = mc.currentScreen;
         if (currentScreen instanceof GuiChest) {
@@ -53,4 +65,5 @@ public class InventoryUtil {
             player.windowClick(c.windowId, slot, mouse, mode, mc.thePlayer);
         }
     }
+
 }
