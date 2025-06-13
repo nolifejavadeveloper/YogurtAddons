@@ -8,6 +8,8 @@ import net.minecraft.inventory.Container;
 import org.apache.commons.lang3.Validate;
 
 public class InventoryUtil {
+    private static Minecraft mc = Minecraft.getMinecraft();
+
     public static int MOUSE_CLICK_LEFT = 0;
     public static int MOUSE_CLICK_RIGHT = 1;
     public static int MOUSE_CLICK_MIDDLE = 2;
@@ -22,7 +24,7 @@ public class InventoryUtil {
 
     public static void setHolderingSlot(int slot) {
         Validate.isTrue(slot >= 0 && slot <= 8, "slot must be between 0 and 8");
-        Minecraft.getMinecraft().thePlayer.inventory.currentItem = slot;
+        mc.thePlayer.inventory.currentItem = slot;
     }
 
     public static void takeChest(int slot) {
@@ -43,7 +45,6 @@ public class InventoryUtil {
     }
 
     private static void windowClick(int slot, int mouse, int mode) {
-        Minecraft mc = Minecraft.getMinecraft();
         GuiScreen currentScreen = mc.currentScreen;
         if (currentScreen instanceof GuiChest) {
             GuiChest chest = (GuiChest) currentScreen;
