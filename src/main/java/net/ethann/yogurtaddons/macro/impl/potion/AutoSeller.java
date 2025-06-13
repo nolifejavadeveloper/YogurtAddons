@@ -78,7 +78,7 @@ public class AutoSeller {
                     return;
                 }
                 if (!InventoryUtil.getCurrentContainerName().equals("Trades")) {
-                    log("container name does not match \"Trades\"");
+                    ChatUtil.warn("container name does not match \"Trades\"");
                     disable();
                 }
                 EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
@@ -87,22 +87,22 @@ public class AutoSeller {
                 Pair<Integer,Integer> slot;
                 while (true) {
                     if (order.isEmpty()) {
-                        log("unable to find a slot, ending...");
+                        ChatUtil.log("unable to find a slot, ending...");
                         disable();
                         return;
                     }
                     slot = order.poll();
                     ItemStack item = inv.getStackInSlot(slot.a);
                     if (item == null) {
-                        log("skipping slot " + slot.a + " since it is empty");
+                        ChatUtil.log("skipping slot " + slot.a + " since it is empty");
                     }else if (!shouldSell(item)) {
-                        log("skipping slot " + slot.a + " since it is not the target item");
+                        ChatUtil.log("skipping slot " + slot.a + " since it is not the target item");
                     }else {
                         break;
                     }
                 }
                 InventoryUtil.leftShiftClickItem(slot.b);
-                log("clicked " + slot.b);
+                ChatUtil.log("clicked " + slot.b);
 
                 scheduler.schedule(DelayUtil.getDelay(300, 100));
             }
@@ -114,21 +114,18 @@ public class AutoSeller {
     }
 
     public void enable() {
-        log("enabling autoseller");
+        ChatUtil.log("enabling autoseller");
         scheduler.schedule(1000);
         MinecraftForge.EVENT_BUS.register(this);
         hud.enable();
     }
 
     public void disable() {
-        log("disabling autoseller");
+        ChatUtil.log("disabling autoseller");
         MinecraftForge.EVENT_BUS.unregister(this);
         hud.disable();
     }
 
-    private void log(String s) {
-        Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText("§a§lYo§e§lgurt§r§f > " + s));
-    }
 
     private enum SellingStage {
         START,
