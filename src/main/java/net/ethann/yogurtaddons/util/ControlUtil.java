@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 
 public class ControlUtil {
-    public static void rightClick() {
+    public static void interact() {
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         player.interactFirst(player);
     }
