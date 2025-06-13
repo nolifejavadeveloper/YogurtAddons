@@ -115,7 +115,6 @@ public class AutoSeller {
 
     public void enable() {
         ChatUtil.log("enabling autoseller");
-        scheduler.schedule(1000);
         MinecraftForge.EVENT_BUS.register(this);
         hud.enable();
     }
