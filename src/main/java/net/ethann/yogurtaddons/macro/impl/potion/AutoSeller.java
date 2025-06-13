@@ -6,7 +6,6 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -71,6 +70,7 @@ public class AutoSeller {
             case OPEN_TRADE_MENU:
                 ChatUtil.sendCommand("trade");
                 scheduler.schedule(DelayUtil.getDelay(900, 400));
+                stage = SellingStage.SELL;
             case SELL: {
                 if (!scheduler.isOver()) return;
                 if (order.isEmpty()) {
@@ -128,9 +128,6 @@ public class AutoSeller {
 
 
     private enum SellingStage {
-        START,
-        OPEN_SB_MENU,
-        OPEN_RECIPE_MENU,
         OPEN_TRADE_MENU,
         SELL,
     }
