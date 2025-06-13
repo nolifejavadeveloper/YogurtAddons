@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
 import org.apache.commons.lang3.Validate;
 
@@ -49,10 +50,10 @@ public class InventoryUtil {
         GuiScreen currentScreen = mc.currentScreen;
         if (currentScreen instanceof GuiChest) {
             GuiChest chest = (GuiChest) currentScreen;
-            IInventory inv = (IInventory) chest;
+            IInventory inv = ((ContainerChest) chest.inventorySlots).getLowerChestInventory();
+            System.out.println(inv.getDisplayName().getUnformattedText());
             return inv.getDisplayName().getUnformattedText();
         }
-
         return "";
     }
 
