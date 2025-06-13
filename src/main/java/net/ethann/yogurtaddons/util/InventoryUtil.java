@@ -53,7 +53,7 @@ public class InventoryUtil {
             return inv.getDisplayName().getUnformattedText();
         }
 
-        return null;
+        return "";
     }
 
     private static void windowClick(int slot, int mouse, int mode) {
