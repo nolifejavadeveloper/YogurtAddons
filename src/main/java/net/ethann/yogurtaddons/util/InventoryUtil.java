@@ -33,6 +33,11 @@ public class InventoryUtil {
         windowClick(slot, MOUSE_CLICK_LEFT, MODE_REGULAR_CLICK);
     }
 
+    public static void leftShiftClickItem(int slot) {
+        windowClick(slot, MOUSE_CLICK_LEFT, MODE_SHIFT_CLICK);
+    }
+
+
     public static void middleClickItem(int slot) {
         windowClick(slot, MOUSE_CLICK_MIDDLE, MODE_MIDDLE_CLICK);
     }
