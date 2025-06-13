@@ -10,11 +10,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.text.DecimalFormat;
 
-public class AutoSellChestHUD {
+public class AutoSellerHUD {
     private final Scheduler scheduler;
     private static DecimalFormat df = new DecimalFormat("#.##");
 
-    public AutoSellChestHUD(Scheduler scheduler) {
+    public AutoSellerHUD(Scheduler scheduler) {
         this.scheduler = scheduler;
     }
 
