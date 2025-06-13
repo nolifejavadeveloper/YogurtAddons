@@ -68,7 +68,7 @@ public class AutoSeller {
     public void onTick(TickEvent.ClientTickEvent e) {
         switch (stage) {
             case OPEN_TRADE_MENU:
-                ChatUtil.sendCommand("trade");
+                ChatUtil.sendCommand("trades");
                 scheduler.schedule(DelayUtil.getDelay(900, 400));
                 stage = SellingStage.SELL;
                 break;
