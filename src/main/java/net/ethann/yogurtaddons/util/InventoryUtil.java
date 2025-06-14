@@ -51,7 +51,6 @@ public class InventoryUtil {
         if (currentScreen instanceof GuiChest) {
             GuiChest chest = (GuiChest) currentScreen;
             IInventory inv = ((ContainerChest) chest.inventorySlots).getLowerChestInventory();
-            System.out.println(inv.getDisplayName().getUnformattedText());
             return inv.getDisplayName().getUnformattedText();
         }
         return "";
