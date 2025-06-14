@@ -60,7 +60,7 @@ public class InventoryUtil {
         mc.thePlayer.closeScreen();
     }
 
-    public static int InventorySlotToProtocol(int slot) {
+    public static int inventorySlotToProtocol(int slot) {
         return slot + (slot > 8 ? 45 : 81);
     }
 
