@@ -60,6 +60,10 @@ public class InventoryUtil {
         mc.thePlayer.closeScreen();
     }
 
+    public static int InventorySlotToProtocol(int slot) {
+        return slot + (slot > 8 ? 45 : 81);
+    }
+
     private static void windowClick(int slot, int mouse, int mode) {
         GuiScreen currentScreen = mc.currentScreen;
         if (currentScreen instanceof GuiChest) {
