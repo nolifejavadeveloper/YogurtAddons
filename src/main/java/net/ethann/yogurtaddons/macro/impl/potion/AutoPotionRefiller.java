@@ -79,7 +79,7 @@ public class AutoPotionRefiller {
                     return;
                 }
 
-                scheduler.schedule(DelayUtil.getDelay(200, 300));
+                scheduler.schedule(DelayUtil.getDelay(400, 300));
                 stage = RefillStage.CLOSE_STASH;
                 break;
             }
@@ -126,7 +126,7 @@ public class AutoPotionRefiller {
                     return;
                 }
 
-                InventoryUtil.leftClickItem(slot + 45);
+                InventoryUtil.leftClickItem(InventoryUtil.inventorySlotToProtocol(slot));
 
                 scheduler.schedule(DelayUtil.getDelay(600, 400));
                 stage = RefillStage.SECOND_ITEM_SHIFT;
@@ -155,7 +155,7 @@ public class AutoPotionRefiller {
                     return;
                 }
 
-                InventoryUtil.leftShiftClickItem(slot + 45);
+                InventoryUtil.leftShiftClickItem(InventoryUtil.inventorySlotToProtocol(slot));
 
                 scheduler.schedule(DelayUtil.getDelay(120, 90));
                 stage = RefillStage.DUMP_ITEMS;
@@ -172,13 +172,14 @@ public class AutoPotionRefiller {
 
                 EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
                 Container chest = p.openContainer;
+                InventoryPlayer inv = p.inventory;
 
                 ChatUtil.log("dumping items into chest...");
 
-                for (int i = 0; i < 9 * 6; i++) {
-                    Slot s = chest.getSlot(i);
-                    if (s.getHasStack() && isTarget(s.getStack())) {
-                        InventoryUtil.leftShiftClickItem(s.getSlotIndex());
+                for (int i = 0; i < inv.getSizeInventory(); i++) {
+                    ItemStack s = inv.getStackInSlot(i);
+                    if (s != null && isTarget(s)) {
+                        InventoryUtil.leftShiftClickItem(InventoryUtil.inventorySlotToProtocol(i));
                     }
                 }
 
