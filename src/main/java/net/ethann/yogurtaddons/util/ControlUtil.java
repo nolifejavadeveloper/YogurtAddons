@@ -6,16 +6,23 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ControlUtil {
-    private static final int REACH = 3;
-
     public static void rightClick() {
         Minecraft mc = Minecraft.getMinecraft();
         Method rightClickMethod;
         try {
             rightClickMethod = Minecraft.class.getDeclaredMethod("rightClickMouse");
-            rightClickMethod.setAccessible(true);
+        } catch (NoSuchMethodException e) {
+            try {
+                rightClickMethod = Minecraft.class.getDeclaredMethod("func_147121_ag");
+            } catch (NoSuchMethodException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+
+        rightClickMethod.setAccessible(true);
+        try {
             rightClickMethod.invoke(mc);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }
