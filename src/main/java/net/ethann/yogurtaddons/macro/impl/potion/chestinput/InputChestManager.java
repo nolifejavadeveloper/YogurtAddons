@@ -23,12 +23,20 @@ public class InputChestManager {
         load();
     }
 
-    public void addChest(BlockPos p) {
+    private void addChest(BlockPos p) {
         chests.add(p);
     }
 
-    public void remove(BlockPos p) {
+    private void removeChest(BlockPos p) {
         chests.remove(p);
+    }
+
+    public void toggleChest(BlockPos p) {
+        if (chests.contains(p)) {
+            removeChest(p);
+        }else {
+            addChest(p);
+        }
     }
 
     public List<BlockPos> getAll() {
