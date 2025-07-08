@@ -20,13 +20,11 @@ public abstract class FeatureBase {
 
     public void enable() {
         enabled = true;
-        MinecraftForge.EVENT_BUS.register(this);
         onEnable();
     }
 
     public void disable() {
         enabled = false;
-        MinecraftForge.EVENT_BUS.unregister(this);
         onDisable();
     }
 

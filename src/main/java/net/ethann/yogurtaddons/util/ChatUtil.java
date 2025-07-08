@@ -8,18 +8,26 @@ public class ChatUtil {
     private static final String PREFIX = "§a§lYo§e§lgurt§r§f";
 
     public static void sendCommand(String s) {
-        mc.thePlayer.sendChatMessage("/" + s);
+        if (mc.thePlayer != null) {
+            mc.thePlayer.sendChatMessage("/" + s);
+        }
     }
 
     public static void log(String s) {
-        mc.thePlayer.addChatComponentMessage(new ChatComponentText(PREFIX + " > " + s));
+        if (mc.thePlayer != null) {
+            mc.thePlayer.addChatComponentMessage(new ChatComponentText(PREFIX + " > " + s));
+        }
     }
 
     public static void warn(String s) {
-        mc.thePlayer.addChatComponentMessage(new ChatComponentText(PREFIX + " §6[WARN]§r > " + s));
+        if (mc.thePlayer != null) {
+            mc.thePlayer.addChatComponentMessage(new ChatComponentText(PREFIX + " §6[WARN]§r > " + s));
+        }
     }
 
     public static void error(String s) {
-        mc.thePlayer.addChatComponentMessage(new ChatComponentText(PREFIX + " §c[Error]§r > " + s));
+        if (mc.thePlayer != null) {
+            mc.thePlayer.addChatComponentMessage(new ChatComponentText(PREFIX + " §c[Error]§r > " + s));
+        }
     }
 }
